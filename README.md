@@ -1,36 +1,84 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Real-Time Chat
+
+A private, self-destructing real-time chat application built with Next.js and Upstash.
+
+## Features
+
+- 🔒 **Private Rooms** - Create secure chat rooms with unique IDs
+- ⚡ **Real-Time Messaging** - Instant message delivery using Upstash Realtime
+- ⏱️ **Self-Destructing** - Rooms automatically expire after 10 minutes
+- 👤 **Anonymous Users** - Auto-generated anonymous usernames
+- 🚫 **Room Limits** - Maximum 2 users per room
+- 💣 **Manual Destruction** - Destroy rooms instantly at any time
+
+## Tech Stack
+
+- **Frontend**: Next.js 16, React 19, TypeScript
+- **Backend**: Elysia (Bun runtime)
+- **Database**: Upstash Redis
+- **Real-Time**: Upstash Realtime
+- **Styling**: Tailwind CSS
+- **State Management**: TanStack Query
+
+## Prerequisites
+
+- Node.js 18+ or Bun
+- Upstash Redis account
+- Upstash Realtime account
+
+## Environment Variables
+
+Create a `.env.local` file in the root directory:
+
+```env
+UPSTASH_REDIS_REST_URL=your_redis_url
+UPSTASH_REDIS_REST_TOKEN=your_redis_token
+UPSTASH_REALTIME_URL=your_realtime_url
+UPSTASH_REALTIME_TOKEN=your_realtime_token
+```
 
 ## Getting Started
 
-First, run the development server:
+1. Install dependencies:
 
 ```bash
-npm run dev
+bun install
 # or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Set up your environment variables (see above)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. Run the development server:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+bun dev
+# or
+npm run dev
+```
 
-## Learn More
+4. Open [http://localhost:3000](http://localhost:3000) in your browser
 
-To learn more about Next.js, take a look at the following resources:
+## Usage
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. **Create a Room**: Click "CREATE SECURE ROOM" to generate a new chat room
+2. **Share the Link**: Copy the room URL and share it with one other person
+3. **Chat**: Start sending messages in real-time
+4. **Destroy**: Click "DESTROY NOW" to immediately delete the room and all messages
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Project Structure
 
-## Deploy on Vercel
+```
+src/
+├── app/
+│   ├── api/              # API routes (Elysia backend)
+│   ├── room/[roomId]/    # Chat room page
+│   └── page.tsx          # Home/lobby page
+├── components/           # React components
+├── hooks/                # Custom React hooks
+└── lib/                  # Utilities and clients
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## License
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+MIT
