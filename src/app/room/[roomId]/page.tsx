@@ -6,7 +6,7 @@ import { useRealtime } from "@/lib/realtime-client";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { format } from "date-fns";
 import { useParams, useRouter } from "next/navigation";
-import { use, useEffect, useRef, useState } from "react";
+import { startTransition, useEffect, useRef, useState } from "react";
 
 function formatTimeRemaining(seconds: number) {
   const mins = Math.floor(seconds / 60);
@@ -26,6 +26,7 @@ const Page = () => {
 
   const [copyStatus, setCopyStatus] = useState("COPY");
   const [timeRemaining, setTimeRemaining] = useState<number | null>(null);
+  const initializedRef = useRef(false);
 
   const { data: ttlData } = useQuery({
     queryKey: ["ttl", roomId],
@@ -36,7 +37,12 @@ const Page = () => {
   });
 
   useEffect(() => {
-    if (ttlData?.ttl !== undefined) setTimeRemaining(ttlData.ttl);
+    if (ttlData?.ttl !== undefined && !initializedRef.current) {
+      initializedRef.current = true;
+      startTransition(() => {
+        setTimeRemaining(ttlData.ttl);
+      });
+    }
   }, [ttlData]);
 
   useEffect(() => {
